@@ -47,7 +47,8 @@ app.use(xss());
 app.use( session({
     secret: process.env.SECRET_SESSION,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {secure: process.env.SECRET_SESSION==='production'}
 }))
 
 app.use(passport.initialize());

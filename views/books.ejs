@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Your Books</title>
+</head>
+<body>
+    <%- include('partials/header') %> 
+    
+    <h1>Your Books</h1>
+    <% if (success_msg) { %>
+        <div><%= success_msg %></div>
+    <% } %>
+    <% if (books.length === 0) { %>
+        <p>No books found. Add one!</p>
+    <% } else { %>
+        <ul>
+            <% books.forEach(book => { %>
+                <li>
+                    <strong><%= book.title %></strong> by <%= book.author %>
+                    <p><%= book.description %></p>
+                    <form action="/books/<%= book._id %>/delete" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form action="/books/<%= book._id %>/edit" method="GET" style="display:inline;">
+                        <button type="submit">Edit</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <h2>Add a New Book</h2>
+    <form action="/books/add" method="POST">
+        <input type="text" name="title" placeholder="Title" required>
+        <input type="text" name="author" placeholder="Author" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <button type="submit">Add Book</button>
+    </form>
+    
+    <a href="/auth/logout">Logout</a> 
+    
+    <%- include('partials/footer') %> 
+</body>
+</html>
